@@ -26,6 +26,10 @@ code {
   justify-content: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-space-around {
   justify-content: space-around;
 }
@@ -60,4 +64,8 @@ code {
 
 .width-full {
   width: 100%;
+}
+
+.hidden {
+  opacity: 0;
 }

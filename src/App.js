@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dice from './components/Dice';
 import './app.css';
 
 class App extends Component {
@@ -45,8 +46,7 @@ class App extends Component {
         }
         this.setState({ dice: dice });
     }
-    dieClick = e => {
-        let index = e.target.value;
+    dieClick = index => {
         let dice = this.state.dice;
         dice[index].saved = !dice[index].saved;
         document.getElementById('die-'+index).classList.toggle('die-saved');
@@ -58,81 +58,19 @@ class App extends Component {
                 <header>
                     <h3>Yahtzee</h3>
                 </header>
-                <div>
+                <div id='dice-container' className='flex-row'>
                     {dice.map((item, key) => {
                         return (
-                            <button 
-                            key={key} 
-                            onClick={this.dieClick} 
-                            id={"die-"+key} 
-                            value={key}
-                            >
-                                {item.number}
-                            </button> 
+                            <span key={key} onClick={() => this.dieClick(key)}>
+                                <Dice number={item.number} die={key}/>
+                            </span>
                         );
                     })}
                     <button onClick={this.roll}>Roll</button>
-                    <div className='flex-row align-center'>
-                        <button className='die-button'>
-                            <div className='flex-row align-center justify-center'>
-                                <div className='die-dot'/>
-                            </div>
-                        </button>
-                        <button className='die-button'>
-                            <div className='flex-column justify-center'>
-                                <div className='die-dot align-self-start'/>
-                                <div className='die-dot align-self-end'/>
-                            </div>
-                        </button>
-                        <button className='die-button'>
-                            <div className='flex-column justify-center'>
-                                <div className='die-dot align-self-start'/>
-                                <div className='die-dot align-self-center'/>
-                                <div className='die-dot align-self-end'/>
-                            </div>
-                        </button>
-                        <button className='die-button flex-column justify-space-between width-full'>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                        </button>
-                        <button className='die-button flex-column justify-space-between width-full'>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                            <div className='flex-row align-center justify-center width-full'>
-                                <div className='die-dot'/>
-                            </div>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                        </button>
-                        <button className='die-button flex-column justify-space-between width-full'>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                            <div className='flex-row align-center justify-space-between width-full'>
-                                <div className='die-dot'/>
-                                <div className='die-dot'/>
-                            </div>
-                        </button>
-                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default App
+export default App;
