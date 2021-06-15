@@ -1,0 +1,17 @@
+.die-saved {
+    background-color: orange;
+}
+.die-button {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px
+}
+.die-dot {
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background-color: black;
+}
