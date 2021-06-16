@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dice from './components/Dice';
+import Scorecard from './components/Scorecard';
 import './app.css';
 
 class App extends Component {
@@ -28,6 +29,20 @@ class App extends Component {
     }
     componentDidMount = () => {
         this.newDice();
+        document.addEventListener('keydown', event => {
+            if(event.key === 'Y') {
+                let dice = [];
+                for(let i=0; i<5; i++) {
+                    dice.push({
+                        number: 6,
+                        saved: true
+                    });
+                    document.getElementById('die-'+i).classList.remove('die-saved');
+                    document.getElementById('die-'+i).classList.add('die-saved');
+                }
+                this.setState({ dice: dice });
+            }
+        });
     }
     newDice = () => {
         let dice = [];
@@ -78,6 +93,7 @@ class App extends Component {
                 <header>
                     <h1>Yahtzee</h1>
                 </header>
+                <Scorecard />
                 <div id='dice-container' className='flex-row justify-space-between'>
                     {dice.map((item, key) => {
                         return (
