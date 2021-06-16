@@ -56,9 +56,9 @@ class App extends Component {
         return (
             <div>
                 <header>
-                    <h3>Yahtzee</h3>
+                    <h1>Yahtzee</h1>
                 </header>
-                <div id='dice-container' className='flex-row'>
+                <div id='dice-container' className='flex-row justify-space-between'>
                     {dice.map((item, key) => {
                         return (
                             <span key={key} onClick={() => this.dieClick(key)}>
@@ -66,7 +66,7 @@ class App extends Component {
                             </span>
                         );
                     })}
-                    <button onClick={this.roll}>Roll</button>
+                    <button id='roll-button' onClick={this.roll}>Roll</button>
                 </div>
             </div>
         );

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 class Dice extends Component {
     render() {
         let { number, die } = this.props;
-        console.log(die)
         switch(number) {
             case 1: 
                 return (
