@@ -21,7 +21,9 @@ class App extends Component {
             }, {
                 number: 0,
                 saved: false
-            }]
+            }],
+            rollCount: 1,
+            rollMessage: 'Roll'
         }
     }
     componentDidMount = () => {
@@ -39,12 +41,30 @@ class App extends Component {
     }
     roll = () => {
         let dice = this.state.dice;
-        for(let i=0; i<5; i++) {
-            if(!dice[i].saved) {
-                dice[i].number = Math.floor(Math.random() * 6 + 1);
+        let rollCount = this.state.rollCount;
+        rollCount++;
+        console.log(rollCount)
+        if(rollCount < 4) {
+            for(let i=0; i<5; i++) {
+                if(!dice[i].saved) {
+                    dice[i].number = Math.floor(Math.random() * 6 + 1);
+                }
+            }
+            this.setState({ dice: dice, rollCount: rollCount });
+            if(rollCount === 3) {
+                this.setState({ rollMessage: 'Play' });
+                document.getElementById('roll-button').classList.toggle('play-button');
             }
         }
-        this.setState({ dice: dice });
+        else if(rollCount === 4) {
+            rollCount = 1;
+            this.newDice();
+            document.getElementById('roll-button').classList.toggle('play-button');
+            this.setState({ rollCount: rollCount, rollMessage: 'Roll' });
+            for(let i=0; i<5; i++) {
+                document.getElementById('die-'+i).classList.remove('die-saved');
+            }
+        }
     }
     dieClick = index => {
         let dice = this.state.dice;
@@ -52,7 +72,7 @@ class App extends Component {
         document.getElementById('die-'+index).classList.toggle('die-saved');
     }
     render() {
-        let { dice } = this.state;
+        let { dice, rollMessage } = this.state;
         return (
             <div>
                 <header>
@@ -66,7 +86,7 @@ class App extends Component {
                             </span>
                         );
                     })}
-                    <button id='roll-button' onClick={this.roll}>Roll</button>
+                    <button id='roll-button' onClick={this.roll}>{rollMessage}</button>
                 </div>
             </div>
         );
