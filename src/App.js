@@ -58,7 +58,6 @@ class App extends Component {
         let dice = this.state.dice;
         let rollCount = this.state.rollCount;
         rollCount++;
-        console.log(rollCount)
         if(rollCount < 4) {
             for(let i=0; i<5; i++) {
                 if(!dice[i].saved) {
@@ -93,7 +92,8 @@ class App extends Component {
                 <header>
                     <h1>Yahtzee</h1>
                 </header>
-                <Scorecard />
+                <h2>Scorecard</h2>
+                <Scorecard data={{ dice: dice, rollMessage: rollMessage }}/>
                 <div id='dice-container' className='flex-row justify-space-between'>
                     {dice.map((item, key) => {
                         return (
