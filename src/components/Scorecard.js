@@ -32,18 +32,20 @@ class Scorecard extends Component {
         }
     }
     scoreClick = e => {
+        
         let id = e.target.id;
         let dice = this.state.dice;
         if(this.state.rollMessage === 'Play' && this.state.score[id].value === null) {
-            console.log(id)
             if(id === 'aces' ||
                id ==='twos' ||
                id === 'threes' ||
                id === 'fours' ||
                id === 'fives' ||
                id === 'sixes') {
-                console.log(this.calcUpperBox(id, dice))
+                this.calcUpperBox(id, dice)
             }
+            if(id === 'threeKind') { this.threeKind(id, dice) }
+            if(id === 'yahtzee') { this.yahtzee(id, dice) }
         }
     }
     calcUpperBox = (id, dice) => {
@@ -69,6 +71,51 @@ class Scorecard extends Component {
                 total = total + num;
             }
         }
+        let score = this.state.score;
+        if(this.state.lastPreview !== '') {
+            score[this.state.lastPreview].value = null;
+        }   
+        score[id].value = total;
+        this.setState({ score: score, lastPreview: id });
+        return total;
+    }
+    threeKind = (id, dice) => {
+        let total = 0;
+        let count = {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+        };
+        let threeKind = false
+        for(let i=0; i<dice.length; i++) {
+            let numStr = dice[i].toString();
+            count[numStr]++;
+            if(count[numStr] === 3) { threeKind = true }
+        }
+        if(threeKind) {
+            total = count["1"] + count["2"]*2 + count["3"]*3 + count["4"]*4 + count["5"]*5 + count["6"]*6;
+        }
+        let score = this.state.score;
+        if(this.state.lastPreview !== '') {
+            score[this.state.lastPreview].value = null;
+        }   
+        score[id].value = total;
+        this.setState({ score: score, lastPreview: id });
+        return total;
+    }
+    yahtzee = (id, dice) => {
+        let firstDie = dice[0];
+        let total = 0;
+        let yahtzee = true;
+        for(let i=1; i<dice.length; i++) {
+            if(dice[i] !== firstDie) {
+                yahtzee = false;
+            }
+        }
+        if(yahtzee) { total = 50 }
         let score = this.state.score;
         if(this.state.lastPreview !== '') {
             score[this.state.lastPreview].value = null;
@@ -113,7 +160,7 @@ class Scorecard extends Component {
                         </tr>
                         <tr>
                             <td>Bonus</td>
-                            <td><div className="table-score-box"></div></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -125,7 +172,7 @@ class Scorecard extends Component {
                     <tbody>
                         <tr>
                             <td>3 of a Kind</td>
-                            <td><div className="table-score-box"></div></td>
+                            <td><div className="table-score-box" onClick={this.scoreClick} id='threeKind'>{score.threeKind.value}</div></td>
                         </tr>
                         <tr>
                             <td>4 of a Kind</td>
@@ -149,7 +196,7 @@ class Scorecard extends Component {
                         </tr>
                         <tr>
                             <td>Yahtzee</td>
-                            <td><div className="table-score-box"></div></td>
+                            <td><div className="table-score-box" onClick={this.scoreClick} id='yahtzee'>{score.yahtzee.value}</div></td>
                         </tr>
                         { yahtzeed ? (
                             <tr>

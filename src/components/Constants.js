@@ -16,6 +16,12 @@ const initScoreData = {
     },
     sixes: {
         value: null
+    },
+    threeKind: {
+        value: null
+    },
+    yahtzee: {
+        value: null
     }
 }
 
